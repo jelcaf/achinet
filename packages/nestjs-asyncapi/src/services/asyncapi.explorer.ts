@@ -14,7 +14,9 @@ import { DenormalizedDoc, DenormalizedDocResolvers } from '../interface';
 
 export class AsyncApiExplorer {
   private readonly metadataScanner = new MetadataScanner();
+
   private readonly schemas: SchemaObject[] = [];
+
   private readonly schemaRefsStack: string[] = [];
 
   private operationIdFactory = (controllerKey: string, methodKey: string) =>
@@ -34,20 +36,14 @@ export class AsyncApiExplorer {
     if (
       !instance ||
       !metatype ||
-      !Reflect.getMetadataKeys(metatype).find((label) =>
-        asyncApiClassAnnotationLabels.includes(label),
-      )
+      !Reflect.getMetadataKeys(metatype).find((label) => asyncApiClassAnnotationLabels.includes(label))
     ) {
       return [];
     }
 
     const prototype = Object.getPrototypeOf(instance);
     const documentResolvers: DenormalizedDocResolvers = {
-      root: [
-        exploreAsyncapiClassMetadata,
-        exploreControllerMetadata,
-        exploreGatewayMetadata,
-      ],
+      root: [exploreAsyncapiClassMetadata, exploreControllerMetadata, exploreGatewayMetadata],
       security: [],
       tags: [],
       operations: [exploreAsyncApiOperationMetadata],
@@ -76,22 +72,16 @@ export class AsyncApiExplorer {
     _modulePath?: string,
     _globalPrefix?: string,
   ): DenormalizedDoc[] {
-    const denormalizedAsyncapiServices = this.metadataScanner.scanFromPrototype<
-      unknown,
-      DenormalizedDoc[]
-    >(instance, prototype, (name) => {
-      const targetCallback = prototype[name];
-      const methodMetadata = documentResolvers.root.reduce((_metadata, fn) => {
-        const serviceMetadata = fn(metatype);
+    const denormalizedAsyncapiServices = this.metadataScanner.scanFromPrototype<unknown, DenormalizedDoc[]>(
+      instance,
+      prototype,
+      (name) => {
+        const targetCallback = prototype[name];
+        const methodMetadata = documentResolvers.root.reduce((_metadata, fn) => {
+          const serviceMetadata = fn(metatype);
 
-        const channels = documentResolvers.operations.reduce(
-          (operations, exploreOperationsMeta) => {
-            const meta = exploreOperationsMeta(
-              this.schemas,
-              instance,
-              prototype,
-              targetCallback,
-            );
+          const channels = documentResolvers.operations.reduce((operations, exploreOperationsMeta) => {
+            const meta = exploreOperationsMeta(this.schemas, instance, prototype, targetCallback);
             if (!meta) {
               return operations;
             }
@@ -104,17 +94,16 @@ export class AsyncApiExplorer {
               }
             });
             return operations;
-          },
-          {},
-        );
+          }, {});
 
-        return Object.keys(channels).map((channel) => ({
-          root: { ...serviceMetadata, name: channel },
-          operations: channels[channel],
-        }));
-      }, []);
-      return methodMetadata;
-    });
+          return Object.keys(channels).map((channel) => ({
+            root: { ...serviceMetadata, name: channel },
+            operations: channels[channel],
+          }));
+        }, []);
+        return methodMetadata;
+      },
+    );
 
     return flatten(denormalizedAsyncapiServices);
   }

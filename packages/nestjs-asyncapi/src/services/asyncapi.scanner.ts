@@ -10,23 +10,20 @@ import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object
 import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
 import { stripLastSlash } from '@nestjs/swagger/dist/utils/strip-last-slash.util';
 import { flatten, isEmpty } from 'lodash';
-import {
-  AsyncApiDocument,
-  AsyncApiDocumentOptions,
-  DenormalizedDoc,
-} from '../interface';
+import { AsyncApiDocument, AsyncApiDocumentOptions, DenormalizedDoc } from '../interface';
 import { AsyncApiExplorer } from './asyncapi.explorer';
 import { AsyncapiTransformer } from './asyncapi.transformer';
 
 export class AsyncapiScanner {
   private readonly transformer = new AsyncapiTransformer();
+
   private readonly explorer = new AsyncApiExplorer();
+
   private readonly modelPropertiesAccessor = new ModelPropertiesAccessor();
+
   private readonly swaggerTypesMapper = new SwaggerTypesMapper();
-  private readonly schemaObjectFactory = new SchemaObjectFactory(
-    this.modelPropertiesAccessor,
-    this.swaggerTypesMapper,
-  );
+
+  private readonly schemaObjectFactory = new SchemaObjectFactory(this.modelPropertiesAccessor, this.swaggerTypesMapper);
 
   public scanApplication(
     app: INestApplicationContext,
@@ -40,65 +37,35 @@ export class AsyncapiScanner {
       operationIdFactory,
     } = options;
 
-    const container: NestContainer = (app as any).container;
-    const modules: Module[] = this.getModules(
-      container.getModules(),
-      includedModules,
-    );
-    const globalPrefix = !ignoreGlobalPrefix
-      ? stripLastSlash(this.getGlobalPrefix(app))
-      : '';
+    const { container } = app as any;
+    const modules: Module[] = this.getModules(container.getModules(), includedModules);
+    const globalPrefix = !ignoreGlobalPrefix ? stripLastSlash(this.getGlobalPrefix(app)) : '';
 
-    const denormalizedChannels = modules.reduce(
-      (channels, { providers, metatype, imports, controllers }) => {
-        let allProviders = new Map([...providers, ...controllers]);
+    const denormalizedChannels = modules.reduce((channels, { providers, metatype, imports, controllers }) => {
+      let allProviders = new Map([...providers, ...controllers]);
 
-        if (deepScanRoutes) {
-          // only load submodules routes if asked
-          const isGlobal = (module: Type<any>) =>
-            !container.isGlobalModule(module);
+      if (deepScanRoutes) {
+        // only load submodules routes if asked
+        const isGlobal = (module: Type<any>) => !container.isGlobalModule(module);
 
-          Array.from(imports.values())
-            .filter(isGlobal as any)
-            .map(
-              ({
-                providers: relatedProviders,
-                controllers: relatedControllers,
-              }) => ({
-                relatedProviders,
-                relatedControllers,
-              }),
-            )
-            .forEach(({ relatedProviders, relatedControllers }) => {
-              allProviders = new Map([
-                ...allProviders,
-                ...relatedProviders,
-                ...relatedControllers,
-              ]);
-            });
-        }
-        const path = metatype
-          ? Reflect.getMetadata(MODULE_PATH, metatype)
-          : undefined;
+        Array.from(imports.values())
+          .filter(isGlobal as any)
+          .map(({ providers: relatedProviders, controllers: relatedControllers }) => ({
+            relatedProviders,
+            relatedControllers,
+          }))
+          .forEach(({ relatedProviders, relatedControllers }) => {
+            allProviders = new Map([...allProviders, ...relatedProviders, ...relatedControllers]);
+          });
+      }
+      const path = metatype ? Reflect.getMetadata(MODULE_PATH, metatype) : undefined;
 
-        return [
-          ...channels,
-          ...this.scanModuleProviders(
-            allProviders,
-            path,
-            globalPrefix,
-            operationIdFactory,
-          ),
-        ];
-      },
-      [],
-    );
+      return [...channels, ...this.scanModuleProviders(allProviders, path, globalPrefix, operationIdFactory)];
+    }, []);
 
     const schemas = this.explorer.getSchemas();
     this.addExtraModels(schemas, extraModels);
-    const normalizedChannels = this.transformer.normalizeChannels(
-      flatten(denormalizedChannels),
-    );
+    const normalizedChannels = this.transformer.normalizeChannels(flatten(denormalizedChannels));
     return {
       ...normalizedChannels,
       components: { schemas },
@@ -111,32 +78,19 @@ export class AsyncapiScanner {
     globalPrefix?: string,
     operationIdFactory?: (controllerKey: string, methodKey: string) => string,
   ): DenormalizedDoc[] {
-    const denormalizedArray = [...providers.values()].reduce(
-      (denormalized, prov) => {
-        const object = this.explorer.explorerAsyncapiServices(
-          prov,
-          modulePath,
-          globalPrefix,
-          operationIdFactory,
-        );
-        return [...denormalized, ...object];
-      },
-      [],
-    );
+    const denormalizedArray = [...providers.values()].reduce((denormalized, prov) => {
+      const object = this.explorer.explorerAsyncapiServices(prov, modulePath, globalPrefix, operationIdFactory);
+      return [...denormalized, ...object];
+    }, []);
 
     return flatten(denormalizedArray) as any;
   }
 
-  private getModules(
-    modulesContainer: Map<string, Module>,
-    include: Function[],
-  ): Module[] {
+  private getModules(modulesContainer: Map<string, Module>, include: Function[]): Module[] {
     if (!include || isEmpty(include)) {
       return [...modulesContainer.values()];
     }
-    return [...modulesContainer.values()].filter(({ metatype }) =>
-      include.some((item) => item === metatype),
-    );
+    return [...modulesContainer.values()].filter(({ metatype }) => include.some((item) => item === metatype));
   }
 
   private getGlobalPrefix(app: INestApplicationContext): string {
@@ -144,10 +98,7 @@ export class AsyncapiScanner {
     return internalConfigRef?.getGlobalPrefix() || '';
   }
 
-  private addExtraModels(
-    schemas: Record<string, SchemaObject>,
-    extraModels: Function[],
-  ) {
+  private addExtraModels(schemas: Record<string, SchemaObject>, extraModels: Function[]) {
     extraModels.forEach((item) => {
       this.schemaObjectFactory.exploreModelSchema(item, schemas);
     });

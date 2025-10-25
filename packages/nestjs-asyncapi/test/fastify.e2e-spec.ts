@@ -1,8 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import fs from 'fs/promises';
 import jsyaml from 'js-yaml';
 import request from 'supertest';
@@ -17,7 +14,7 @@ describe('Fastify AsyncAPI', () => {
   beforeAll(async () => {
     app = await NestFactory.create<NestFastifyApplication>(
       AppModule,
-      //@ts-ignore
+      // @ts-ignore
       new FastifyAdapter(),
       { logger: false },
     );

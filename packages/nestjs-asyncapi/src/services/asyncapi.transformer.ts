@@ -1,13 +1,7 @@
-import {
-  AsyncChannelObject,
-  AsyncChannelsObject,
-  DenormalizedDoc,
-} from '../interface';
+import { AsyncChannelObject, AsyncChannelsObject, DenormalizedDoc } from '../interface';
 
 export class AsyncapiTransformer {
-  public normalizeChannels(
-    denormalizedDocs: DenormalizedDoc[],
-  ): Record<'channels', AsyncChannelsObject> {
+  public normalizeChannels(denormalizedDocs: DenormalizedDoc[]): Record<'channels', AsyncChannelsObject> {
     const flatChannels = denormalizedDocs.map((doc: DenormalizedDoc) => {
       const key = doc.root?.name;
       const value: AsyncChannelObject = {

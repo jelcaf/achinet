@@ -1,16 +1,16 @@
 /**
  * @see https://github.com/asyncapi/html-template#supported-parameters
- **/
+ * */
 export interface AsyncApiTemplateOptions {
-  /** @default byTagsNoRoot **/
+  /** @default byTagsNoRoot * */
   sidebarOrganization?: 'byTags' | 'byTagsNoRoot';
   /**
    * @example /docs
-   **/
+   * */
   baseHref?: string;
-  /** @default true **/
+  /** @default true * */
   singleFile?: boolean;
-  /** @example asyncapi.html **/
+  /** @example asyncapi.html * */
   outFilename?: string;
   /**
    * @description 	Generates output HTML as PDF

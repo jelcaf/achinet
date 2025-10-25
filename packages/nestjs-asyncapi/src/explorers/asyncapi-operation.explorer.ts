@@ -12,18 +12,9 @@ export const exploreAsyncApiOperationMetadata = (
   _prototype: Type<unknown>,
   method: object,
 ) => {
-  const metadataOperations: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
-    DECORATORS.AsyncApiOperation,
-    method,
-  );
-  const metadataSubs: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
-    DECORATORS.AsyncApiSub,
-    method,
-  );
-  const metadataPubs: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
-    DECORATORS.AsyncApiPub,
-    method,
-  );
+  const metadataOperations: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(DECORATORS.AsyncApiOperation, method);
+  const metadataSubs: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(DECORATORS.AsyncApiSub, method);
+  const metadataPubs: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(DECORATORS.AsyncApiPub, method);
 
   const metadataCombined = [
     ...(metadataOperations ? Object.values(metadataOperations) : []),

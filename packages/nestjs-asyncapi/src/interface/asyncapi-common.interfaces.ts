@@ -54,10 +54,7 @@ export interface AsyncComponentsObject {
   messageTraits?: Record<string, AsyncMessageTraitObject>;
   serverBindings?: Record<string, KafkaServerBinding | AmqpServerBinding>;
   channelBindings?: Record<string, KafkaChannelBinding | AmqpChannelBinding>;
-  operationBindings?: Record<
-    string,
-    KafkaOperationBinding | AmqpOperationBinding
-  >;
+  operationBindings?: Record<string, KafkaOperationBinding | AmqpOperationBinding>;
   messageBindings?: Record<string, KafkaMessageBinding | AmqpMessageBinding>;
 }
 

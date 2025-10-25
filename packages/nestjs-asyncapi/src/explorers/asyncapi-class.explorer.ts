@@ -11,11 +11,7 @@ try {
   GATEWAY_METADATA = '__gateway__'; // in case @nestjs/websockets is not installed GATEWAY_METADATA value is irrelevant
 }
 
-export const asyncApiClassAnnotationLabels = [
-  DECORATORS.AsyncApiClass,
-  CONTROLLER_WATERMARK,
-  GATEWAY_METADATA,
-];
+export const asyncApiClassAnnotationLabels = [DECORATORS.AsyncApiClass, CONTROLLER_WATERMARK, GATEWAY_METADATA];
 
 export const exploreAsyncapiClassMetadata = (metatype: Type<unknown>) => {
   return Reflect.getMetadata(DECORATORS.AsyncApiClass, metatype);

@@ -4,17 +4,10 @@ import {
   TagObject,
 } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { isUndefined, negate, pickBy } from 'lodash';
-import {
-  AsyncApiDocument,
-  AsyncSecuritySchemeObject,
-  AsyncServerObject,
-} from './interface';
+import { AsyncApiDocument, AsyncSecuritySchemeObject, AsyncServerObject } from './interface';
 
 export class AsyncApiDocumentBuilder {
-  private readonly buildDocumentBase = (): Omit<
-    AsyncApiDocument,
-    'channels'
-  > => ({
+  private readonly buildDocumentBase = (): Omit<AsyncApiDocument, 'channels'> => ({
     asyncapi: '2.5.0',
     info: {
       title: '',
@@ -27,8 +20,7 @@ export class AsyncApiDocumentBuilder {
     components: {},
   });
 
-  private readonly document: Omit<AsyncApiDocument, 'channels'> =
-    this.buildDocumentBase();
+  private readonly document: Omit<AsyncApiDocument, 'channels'> = this.buildDocumentBase();
 
   public setTitle(title: string): this {
     this.document.info.title = title;
@@ -65,9 +57,7 @@ export class AsyncApiDocumentBuilder {
     return this;
   }
 
-  public addServers(
-    servers: { name: string; server: AsyncServerObject }[],
-  ): this {
+  public addServers(servers: { name: string; server: AsyncServerObject }[]): this {
     for (const { name, server } of servers) {
       this.addServer(name, server);
     }
@@ -85,11 +75,7 @@ export class AsyncApiDocumentBuilder {
     return this;
   }
 
-  public addTag(
-    name: string,
-    description = '',
-    externalDocs?: ExternalDocumentationObject,
-  ): this {
+  public addTag(name: string, description = '', externalDocs?: ExternalDocumentationObject): this {
     this.document.tags = this.document.tags!.concat(
       pickBy(
         {

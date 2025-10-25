@@ -1,15 +1,7 @@
-import {
-  INestApplication,
-  INestApplicationContext,
-  Logger,
-} from '@nestjs/common';
+import { INestApplication, INestApplicationContext, Logger } from '@nestjs/common';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
 import jsyaml from 'js-yaml';
-import {
-  AsyncApiDocument,
-  AsyncApiDocumentOptions,
-  AsyncApiTemplateOptions,
-} from './interface';
+import { AsyncApiDocument, AsyncApiDocumentOptions, AsyncApiTemplateOptions } from './interface';
 import { AsyncapiGenerator, AsyncapiScanner } from './services';
 
 export class AsyncApiModule {
@@ -34,10 +26,7 @@ export class AsyncApiModule {
     };
   }
 
-  static async composeHtml(
-    contract: AsyncApiDocument,
-    templateOptions?: AsyncApiTemplateOptions,
-  ) {
+  static async composeHtml(contract: AsyncApiDocument, templateOptions?: AsyncApiTemplateOptions) {
     const generator = new AsyncapiGenerator(templateOptions);
     return generator.generate(contract).catch((err) => {
       this.logger.error(err);
@@ -63,12 +52,12 @@ export class AsyncApiModule {
       res.send(html);
     });
 
-    httpAdapter.get(finalPath + '-json', (req, res) => {
+    httpAdapter.get(`${finalPath}-json`, (req, res) => {
       res.type('application/json');
       res.send(jsonDocument);
     });
 
-    httpAdapter.get(finalPath + '-yaml', (req, res) => {
+    httpAdapter.get(`${finalPath}-yaml`, (req, res) => {
       res.type('text/yaml');
       res.send(yamlDocument);
     });

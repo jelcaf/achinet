@@ -1,8 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import {
-  ExpressAdapter,
-  NestExpressApplication,
-} from '@nestjs/platform-express';
+import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import * as fs from 'fs/promises';
 import jsyaml from 'js-yaml';
 import request from 'supertest';
@@ -15,11 +12,7 @@ describe('Express AsyncAPI', () => {
   let app: NestExpressApplication;
 
   beforeAll(async () => {
-    app = await NestFactory.create<NestExpressApplication>(
-      AppModule,
-      new ExpressAdapter(),
-      { logger: false },
-    );
+    app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(), { logger: false });
     const asyncapiDocument = await makeAsyncapiDocument(app);
     await AsyncApiModule.setup(DOC_RELATIVE_PATH, app, asyncapiDocument);
 

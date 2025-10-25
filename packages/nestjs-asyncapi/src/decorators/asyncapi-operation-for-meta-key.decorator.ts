@@ -23,10 +23,7 @@ function makeHeaders(headers?: AsyncApiOperationHeaders) {
     : undefined;
 }
 
-function makeMessage(
-  message: OneAsyncApiMessage,
-  defaultName: string,
-): AsyncMessageObject {
+function makeMessage(message: OneAsyncApiMessage, defaultName: string): AsyncMessageObject {
   return {
     ...message,
     name: message.name || defaultName,
@@ -37,19 +34,14 @@ function makeMessage(
   };
 }
 
-export function AsyncApiOperationForMetaKey(
-  metaKey: string,
-  options: AsyncApiOperationOptions[],
-): MethodDecorator {
+export function AsyncApiOperationForMetaKey(metaKey: string, options: AsyncApiOperationOptions[]): MethodDecorator {
   return (target, propertyKey: string | symbol, descriptor) => {
     const methodName = `${target.constructor.name}#${String(propertyKey)}`;
 
     const transformedOptions: AsyncOperationObject[] = options.map((i) => {
       const message = Array.isArray(i.message)
         ? {
-            oneOf: i.message.map((i, index) =>
-              makeMessage(i, `${methodName}#${index}`),
-            ),
+            oneOf: i.message.map((i, index) => makeMessage(i, `${methodName}#${index}`)),
           }
         : makeMessage(i.message, methodName);
 
@@ -61,10 +53,6 @@ export function AsyncApiOperationForMetaKey(
       return transformedOptionInstance;
     });
 
-    return createMethodDecorator(metaKey, transformedOptions)(
-      target,
-      propertyKey,
-      descriptor,
-    );
+    return createMethodDecorator(metaKey, transformedOptions)(target, propertyKey, descriptor);
   };
 }
