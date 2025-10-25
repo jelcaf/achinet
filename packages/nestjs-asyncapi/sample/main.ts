@@ -6,7 +6,7 @@ import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { makeAsyncapiDocument } from './common';
 import { BOOTSTRAP, DOC_RELATIVE_PATH, HOST, PORT } from './constants';
-import { AsyncApiModule } from '#lib';
+import { AsyncApiModule } from '../src';
 
 const USE_FASTIFY = false;
 
@@ -19,6 +19,7 @@ const adapter = USE_FASTIFY
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<INestApplication>(
     AppModule,
+    // @ts-expect-error
     adapter,
     {},
   );

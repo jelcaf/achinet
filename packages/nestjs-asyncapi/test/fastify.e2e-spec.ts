@@ -14,7 +14,7 @@ describe('Fastify AsyncAPI', () => {
   beforeAll(async () => {
     app = await NestFactory.create<NestFastifyApplication>(
       AppModule,
-      // @ts-ignore
+      // @ts-expect-error Ignore
       new FastifyAdapter(),
       { logger: false },
     );

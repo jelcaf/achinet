@@ -80,14 +80,16 @@ export class AsyncApiExplorer {
         const methodMetadata = documentResolvers.root.reduce((_metadata, fn) => {
           const serviceMetadata = fn(metatype);
 
-          const channels = documentResolvers.operations.reduce((operations, exploreOperationsMeta) => {
+          const channels = documentResolvers.operations.reduce((operationsParam, exploreOperationsMeta) => {
+            const operations = operationsParam;
             const meta = exploreOperationsMeta(this.schemas, instance, prototype, targetCallback);
             if (!meta) {
               return operations;
             }
 
             meta.forEach((op) => {
-              if (operations.hasOwnProperty(op.channel)) {
+              // @eslint-disable-next-line
+              if (Object.prototype.hasOwnProperty.call(operations, op.channel)) {
                 operations[op.channel] = { ...operations[op.channel], ...op };
               } else {
                 operations[op.channel] = op;

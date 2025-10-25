@@ -4,7 +4,7 @@ import { DECORATORS } from '../asyncapi.constants';
 
 let GATEWAY_METADATA;
 try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line
   const wsConstants = require('@nestjs/websockets/constants');
   GATEWAY_METADATA = wsConstants.GATEWAY_METADATA;
 } catch {

@@ -41,7 +41,7 @@ export function AsyncApiOperationForMetaKey(metaKey: string, options: AsyncApiOp
     const transformedOptions: AsyncOperationObject[] = options.map((i) => {
       const message = Array.isArray(i.message)
         ? {
-            oneOf: i.message.map((i, index) => makeMessage(i, `${methodName}#${index}`)),
+            oneOf: i.message.map((j, index) => makeMessage(j, `${methodName}#${index}`)),
           }
         : makeMessage(i.message, methodName);
 

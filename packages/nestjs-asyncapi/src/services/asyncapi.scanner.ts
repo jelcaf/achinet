@@ -1,7 +1,6 @@
 import { INestApplicationContext, Type } from '@nestjs/common';
 import { MODULE_PATH } from '@nestjs/common/constants';
 import { Injectable, InjectionToken } from '@nestjs/common/interfaces';
-import { NestContainer } from '@nestjs/core/injector/container';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { Module } from '@nestjs/core/injector/module';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
