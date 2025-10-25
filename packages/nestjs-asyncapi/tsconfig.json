@@ -1,0 +1,8 @@
+{
+  "extends": "@achinet/tsconfig/nestjs.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "exclude": ["node_modules", "dist"]
+}
+
