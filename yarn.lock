@@ -416,7 +416,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@asyncapi/parser@npm:*, @asyncapi/parser@npm:^3.6.0":
+"@asyncapi/parser@npm:*, @asyncapi/parser@npm:^3.1.0, @asyncapi/parser@npm:^3.4.0, @asyncapi/parser@npm:^3.6.0":
   version: 3.6.0
   resolution: "@asyncapi/parser@npm:3.6.0"
   dependencies:
@@ -440,33 +440,6 @@ __metadata:
     jsonpath-plus: "npm:^10.0.7"
     node-fetch: "npm:2.6.7"
   checksum: 10/adc0db543c72f5ddb674fe4f2bbc070de03dffb69749cff49bdfcb202959e089588edf4371733cd55de4194adc2b485dd1002ff37ca69065a484209e135d7f95
-  languageName: node
-  linkType: hard
-
-"@asyncapi/parser@npm:^3.1.0, @asyncapi/parser@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@asyncapi/parser@npm:3.4.0"
-  dependencies:
-    "@asyncapi/specs": "npm:^6.8.0"
-    "@openapi-contrib/openapi-schema-to-json-schema": "npm:~3.2.0"
-    "@stoplight/json": "npm:3.21.0"
-    "@stoplight/json-ref-readers": "npm:^1.2.2"
-    "@stoplight/json-ref-resolver": "npm:^3.1.5"
-    "@stoplight/spectral-core": "npm:^1.18.3"
-    "@stoplight/spectral-functions": "npm:^1.7.2"
-    "@stoplight/spectral-parsers": "npm:^1.0.2"
-    "@stoplight/spectral-ref-resolver": "npm:^1.0.3"
-    "@stoplight/types": "npm:^13.12.0"
-    "@types/json-schema": "npm:^7.0.11"
-    "@types/urijs": "npm:^1.19.19"
-    ajv: "npm:^8.17.1"
-    ajv-errors: "npm:^3.0.0"
-    ajv-formats: "npm:^2.1.1"
-    avsc: "npm:^5.7.5"
-    js-yaml: "npm:^4.1.0"
-    jsonpath-plus: "npm:^10.0.0"
-    node-fetch: "npm:2.6.7"
-  checksum: 10/67de9ca4a5257b9fb39e16349d9e3aa0f5d34b0343e5d9c0ea05f35171b604f356ab54ac769783caf580f5f3ef90914267aa60b17783ffbfa07af6af071f9f64
   languageName: node
   linkType: hard
 
@@ -529,15 +502,6 @@ __metadata:
   dependencies:
     "@types/json-schema": "npm:^7.0.11"
   checksum: 10/51a9f8e61b85c519baee392641c83f021419f64c68e508732d6461c6b6a60d9891d84e53489a916ef0903a80dd736b0a0631bb97567488b7cc4383437806b84d
-  languageName: node
-  linkType: hard
-
-"@asyncapi/specs@npm:^6.8.0":
-  version: 6.10.0
-  resolution: "@asyncapi/specs@npm:6.10.0"
-  dependencies:
-    "@types/json-schema": "npm:^7.0.11"
-  checksum: 10/bc371518db58cd1484866779001029fa57e677ad24e99aa5518dd2eca6ffc4786aa69d42564acce0b6718569377f20ef555c36d616f5aec6c80fc17492b1aa6a
   languageName: node
   linkType: hard
 
@@ -11771,7 +11735,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonpath-plus@npm:^10.0.0, jsonpath-plus@npm:^10.0.7, jsonpath-plus@npm:^10.3.0, jsonpath-plus@npm:^6.0.1 || ^10.1.0":
+"jsonpath-plus@npm:^10.0.7, jsonpath-plus@npm:^10.3.0, jsonpath-plus@npm:^6.0.1 || ^10.1.0":
   version: 10.3.0
   resolution: "jsonpath-plus@npm:10.3.0"
   dependencies:
