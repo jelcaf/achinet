@@ -95,7 +95,7 @@
     "@nestjs/websockets": "^11.1.7",
     "@swc/core": "1.13.5",
     "js-yaml": "4.1.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "reflect-metadata": "0.2.1"
   }
 }
