@@ -26,7 +26,7 @@
     "rootDir": "./",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": [
+      "^.+\\.ts$": [
         "@swc/jest",
         {
           "jsc": {
@@ -41,6 +41,9 @@
           }
         }
       ]
+    },
+    "moduleNameMapper": {
+      "^@asyncapi/generator$": "<rootDir>/test/__mocks__/@asyncapi/generator.js"
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
@@ -84,8 +87,8 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "@asyncapi/generator": "1.13.1",
-    "@asyncapi/html-template": "0.28.4",
+    "@asyncapi/generator": "^3.1.2",
+    "@asyncapi/html-template": "^3.5.4",
     "@nestjs/common": "^11.1.7",
     "@nestjs/core": "^11.1.7",
     "@nestjs/swagger": "^11.2.1",

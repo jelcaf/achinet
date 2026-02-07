@@ -12,12 +12,7 @@ describe('Fastify AsyncAPI', () => {
   let app: NestFastifyApplication;
 
   beforeAll(async () => {
-    app = await NestFactory.create<NestFastifyApplication>(
-      AppModule,
-      // @ts-expect-error Ignore
-      new FastifyAdapter(),
-      { logger: false },
-    );
+    app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), { logger: false });
     const asyncapiDocument = await makeAsyncapiDocument(app);
     await AsyncApiModule.setup(DOC_RELATIVE_PATH, app, asyncapiDocument);
 
