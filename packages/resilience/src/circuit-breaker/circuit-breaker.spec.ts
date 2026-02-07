@@ -26,8 +26,8 @@ describe('Circuit breaker tests', () => {
 
     await sample.circuitBreakerMethod();
 
-    expect(retryMethodSpy).toBeCalledTimes(1);
-    expect(simpleMethodSpy).toBeCalledTimes(1);
+    expect(retryMethodSpy).toHaveBeenCalledTimes(1);
+    expect(simpleMethodSpy).toHaveBeenCalledTimes(1);
   });
 
   it('Circuit breaker is open after five errors', async () => {
@@ -38,12 +38,12 @@ describe('Circuit breaker tests', () => {
     for (let i = 1; i <= 5; i++) {
       simpleMethodSpy.mockRejectedValueOnce(error);
       // eslint-disable-next-line no-await-in-loop,@typescript-eslint/no-loop-func
-      await expect(async () => sample.circuitBreakerMethod()).rejects.toThrowError(error);
+      await expect(async () => sample.circuitBreakerMethod()).rejects.toThrow(error);
     }
 
     // Circuit should be open, then error
     const serviceUnavailableError = new Error('service unavailable');
-    await expect(async () => sample.circuitBreakerMethod()).rejects.toThrowError(serviceUnavailableError);
+    await expect(async () => sample.circuitBreakerMethod()).rejects.toThrow(serviceUnavailableError);
   });
 
   it('Open circuit is closed after 10 * 1000', async () => {
@@ -54,12 +54,12 @@ describe('Circuit breaker tests', () => {
     for (let i = 1; i <= 5; i++) {
       simpleMethodSpy.mockRejectedValueOnce(error);
       // eslint-disable-next-line no-await-in-loop,@typescript-eslint/no-loop-func
-      await expect(async () => sample.circuitBreakerMethod()).rejects.toThrowError(error);
+      await expect(async () => sample.circuitBreakerMethod()).rejects.toThrow(error);
     }
 
     // Circuit should be open, then error
     const serviceUnavailableError = new Error('service unavailable');
-    await expect(async () => sample.circuitBreakerMethod()).rejects.toThrowError(serviceUnavailableError);
+    await expect(async () => sample.circuitBreakerMethod()).rejects.toThrow(serviceUnavailableError);
 
     // Wait for timeout to elapse
     jest.advanceTimersByTime(10 * 1000);
