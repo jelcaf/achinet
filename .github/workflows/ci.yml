@@ -40,18 +40,11 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Lint
-        run: yarn lint
-
       - name: Build
         run: yarn build
 
-      - name: Upload build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: dist
-          retention-days: 1
+      - name: Lint
+        run: yarn lint
 
   test:
     name: Unit Tests
@@ -81,12 +74,6 @@ jobs:
         run: yarn install --immutable
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: dist
 
       - name: Run tests
         run: yarn test
@@ -119,12 +106,6 @@ jobs:
         run: yarn install --immutable
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: dist
 
       - name: Run E2E tests
         run: yarn test:e2e
