@@ -49,7 +49,6 @@ export class OperationObjectFactory {
     if (!message.payload || !message.payload.type) {
       throw new Error('Async message payload or payload.type is undefined; ensure message.payload is provided.');
     }
-    // eslint-disable-next-line @typescript-eslint/ban-types
     const messagePayloadType = message.payload.type as Function;
     return this.schemaObjectFactory.exploreModelSchema(messagePayloadType, schemas);
   }
