@@ -36,12 +36,12 @@ class Sample {
 describe('Catch decorator', () => {
   it('Catch Error class', async () => {
     const sample = new Sample();
-    await expect(() => sample.methodCatchMyErrorException()).not.toThrowError();
+    await expect(() => sample.methodCatchMyErrorException()).not.toThrow();
   });
 
   it('Catch MyError class', async () => {
     const sample = new Sample();
-    await expect(() => sample.methodCatchErrorException()).not.toThrowError();
+    await expect(() => sample.methodCatchErrorException()).not.toThrow();
   });
 
   it('Can not cach Error class', async () => {
@@ -52,7 +52,7 @@ describe('Catch decorator', () => {
   it('Catch several errors class', async () => {
     const sample = new Sample();
     const spyLoggerFn = jest.spyOn(sample, 'loggerFn');
-    await expect(() => sample.methodWithSeveralCatchException()).not.toThrowError();
+    await expect(() => sample.methodWithSeveralCatchException()).not.toThrow();
     expect(spyLoggerFn).toHaveBeenCalledWith(expect.any(Error), 'Error');
   });
 
