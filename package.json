@@ -24,6 +24,10 @@
     "turbo": "latest",
     "typescript": "^5.9.3"
   },
+  "resolutions": {
+    "@asyncapi/parser@2.1.2/jsonpath-plus": "^10.3.0",
+    "@asyncapi/parser@3.0.0-next-major-spec.8/jsonpath-plus": "^10.3.0"
+  },
   "engines": {
     "node": ">=21.0.0"
   },
