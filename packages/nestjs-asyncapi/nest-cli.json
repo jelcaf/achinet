@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "sample",
+  "entryFile": "sample/main",
+  "compilerOptions": {
+    "tsConfigPath": "tsconfig.sample.json",
+    "deleteOutDir": true,
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "introspectComments": true,
+          "dtoFileNameSuffix": [".dto.ts", ".class.ts"]
+        }
+      }
+    ]
+  }
+}

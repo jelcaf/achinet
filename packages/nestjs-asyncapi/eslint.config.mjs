@@ -3,7 +3,7 @@ import sharedConfig from '@achinet/eslint-config-custom';
 export default [
   ...sharedConfig,
   {
-    ignores: ['dist/**', 'node_modules/**'],
+    ignores: ['dist/**', 'dist-sample/**', 'node_modules/**'],
   },
   {
     files: ['**/*.ts', '**/*.tsx'],

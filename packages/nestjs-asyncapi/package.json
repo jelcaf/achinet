@@ -12,7 +12,9 @@
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "clean": "rimraf dist",
     "test": "jest --passWithNoTests",
-    "test:e2e": "jest --runInBand --config test/configs/jest-e2e.config.js"
+    "test:e2e": "jest --runInBand --config test/configs/jest-e2e.config.js",
+    "start:sample": "nest start",
+    "start:sample:watch": "nest start --watch"
   },
   "jest": {
     "moduleFileExtensions": [
