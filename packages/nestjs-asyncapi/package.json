@@ -1,7 +1,7 @@
 {
   "name": "@achinet/nestjs-async",
   "version": "0.3.0",
-  "description": "",
+  "description": "AsyncAPI documentation for NestJS event-driven APIs (WebSockets, microservices, message brokers), generated from decorators.",
   "author": "",
   "license": "UNLICENSED",
   "repository": {
@@ -9,6 +9,19 @@
     "url": "git+https://github.com/jelcaf/achinet.git",
     "directory": "packages/nestjs-asyncapi"
   },
+  "homepage": "https://github.com/jelcaf/achinet/tree/main/packages/nestjs-asyncapi#readme",
+  "bugs": {
+    "url": "https://github.com/jelcaf/achinet/issues"
+  },
+  "keywords": [
+    "nestjs",
+    "asyncapi",
+    "websockets",
+    "microservices",
+    "documentation",
+    "event-driven",
+    "swagger"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
