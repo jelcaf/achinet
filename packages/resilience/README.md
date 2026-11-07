@@ -7,7 +7,7 @@ This module contains utilities for building resilient applications.
 To install this module using Yarn, run the following command:
 
 ```sh
-yarn add @quantum/resilience
+yarn add @achinet/resilience
 ```
 
 
@@ -18,7 +18,7 @@ yarn add @quantum/resilience
 The retry decorator is used to automatically retry a function if it fails. It takes two parameters: maxRetries and delayMs.
 
 ```typescript
-import { Retry } from '@quantum/resilience';
+import { Retry } from '@achinet/resilience';
 
 class MyService {
   @Retry({ maxRetries: 3, delayMs: 1000 })
@@ -49,7 +49,7 @@ The retry function has the following parameters:
 The circuitBreaker decorator is used to protect a function from being called when a downstream service is unavailable. It takes no parameters.`
 
 ```typescript
-import { CircuitBreaker } from '@quantum/resilience';
+import { CircuitBreaker } from '@achinet/resilience';
 
 class MyService {
   @CircuitBreaker()
