@@ -7,6 +7,7 @@ import { AsyncApiModule } from '../src';
 import { AppModule } from '../sample/app.module';
 import { makeAsyncapiDocument } from '../sample/common';
 import { DOC_RELATIVE_PATH } from '../sample/constants';
+import { expectValidDocHtml } from './helpers/html';
 
 describe('Fastify AsyncAPI', () => {
   let app: NestFastifyApplication;
@@ -25,10 +26,7 @@ describe('Fastify AsyncAPI', () => {
       .get(DOC_RELATIVE_PATH)
       .expect(200)
       .expect('Content-Type', /text\/html/);
-    const htmlSample = await fs.readFile('./misc/references/ref.html', {
-      encoding: 'utf8',
-    });
-    expect(text).toEqual(htmlSample);
+    await expectValidDocHtml(text);
   });
 
   it('should serve doc json', async () => {

@@ -44,9 +44,6 @@
         }
       ]
     },
-    "moduleNameMapper": {
-      "^@asyncapi/generator$": "<rootDir>/test/__mocks__/@asyncapi/generator.js"
-    },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
@@ -83,7 +80,6 @@
     "lint-staged": "16.4.0",
     "prettier": "3.9.10",
     "reflect-metadata": "0.2.2",
-    "release-it": "19.2.4",
     "rimraf": "^6.1.4",
     "socket.io": "4.8.4",
     "socket.io-client": "4.8.4",
@@ -95,8 +91,7 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "@asyncapi/generator": "^3.5.0",
-    "@asyncapi/html-template": "^3.5.6",
+    "@asyncapi/react-component": "^3.2.3",
     "@swc/core": "1.16.22",
     "js-yaml": "5.4.1",
     "lodash": "^4.18.1"
