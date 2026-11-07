@@ -1,5 +1,11 @@
 # @achinet/nestjs-async
 
+## 0.3.1
+
+### Patch Changes
+
+- f3970f2: Add a README with installation, usage and API reference.
+
 ## 0.3.0
 
 ### Minor Changes
