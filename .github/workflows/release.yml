@@ -8,6 +8,8 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # npm trusted publishing (OIDC): no long-lived NPM_TOKEN needed
+  id-token: write
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -38,6 +40,10 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
 
+      # changesets only bumps versions and runs `npm publish`; it never builds
+      - name: Build
+        run: yarn build
+
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
@@ -48,4 +54,3 @@ jobs:
           commit: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
