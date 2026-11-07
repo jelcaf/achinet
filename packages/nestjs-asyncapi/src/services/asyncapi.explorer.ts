@@ -1,7 +1,6 @@
 import { Type } from '@nestjs/common';
 import { MetadataScanner } from '@nestjs/core';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
-import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { flatten } from 'lodash';
 import {
   asyncApiClassAnnotationLabels,
@@ -15,9 +14,8 @@ import { DenormalizedDoc, DenormalizedDocResolvers } from '../interface';
 export class AsyncApiExplorer {
   private readonly metadataScanner = new MetadataScanner();
 
-  private readonly schemas: SchemaObject[] = [];
-
-  private readonly schemaRefsStack: string[] = [];
+  /** Payload classes referenced by operations; their schemas are generated afterwards. */
+  private readonly models = new Set<Function>();
 
   private operationIdFactory = (controllerKey: string, methodKey: string) =>
     controllerKey ? `${controllerKey}_${methodKey}` : methodKey;
@@ -59,9 +57,8 @@ export class AsyncApiExplorer {
     );
   }
 
-  public getSchemas(): Record<string, SchemaObject> {
-    const ret = { ...this.schemas } as unknown as Record<string, SchemaObject>;
-    return ret;
+  public getModels(): Function[] {
+    return [...this.models];
   }
 
   private generateDenormalizedDocument(
@@ -82,7 +79,7 @@ export class AsyncApiExplorer {
 
           const channels = documentResolvers.operations.reduce((operationsParam, exploreOperationsMeta) => {
             const operations = operationsParam;
-            const meta = exploreOperationsMeta(this.schemas, instance, prototype, targetCallback);
+            const meta = exploreOperationsMeta(this.models, instance, prototype, targetCallback);
             if (!meta) {
               return operations;
             }

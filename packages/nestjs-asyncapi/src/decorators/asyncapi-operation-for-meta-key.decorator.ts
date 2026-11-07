@@ -1,4 +1,3 @@
-import { createMethodDecorator } from '@nestjs/swagger/dist/decorators/helpers';
 import {
   AsyncApiOperationHeaders,
   AsyncApiOperationOptions,
@@ -6,6 +5,7 @@ import {
   AsyncOperationObject,
 } from '../interface';
 import { OneAsyncApiMessage } from '../interface/asyncapi-message.interface';
+import { createMethodDecorator } from '../utils';
 
 function makeHeaders(headers?: AsyncApiOperationHeaders) {
   return headers

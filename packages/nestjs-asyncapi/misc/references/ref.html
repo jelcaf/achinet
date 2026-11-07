@@ -83,6 +83,7 @@ components:
           format: x.y.z
           example: 1.0.1
         payload:
+          additionalProperties: true
           oneOf:
             - $ref: '#/components/schemas/Cat'
             - $ref: '#/components/schemas/Lion'
@@ -108,12 +109,11 @@ components:
           format: x.y.z
           example: 1.0.1
         payload:
+          additionalProperties: true
           oneOf: &ref_1
             - $ref: '#/components/schemas/Cat'
             - $ref: '#/components/schemas/Lion'
             - $ref: '#/components/schemas/Tiger'
-          allOf:
-            - $ref: '#/components/schemas/Feline'
         timestamp:
           format: date-time
           type: string
@@ -133,9 +133,8 @@ components:
           format: x.y.z
           example: 1.0.1
         payload:
+          additionalProperties: true
           oneOf: *ref_1
-          allOf:
-            - $ref: '#/components/schemas/Feline'
         timestamp:
           format: date-time
           type: string
@@ -156,6 +155,7 @@ components:
           example: 1.0.1
         payload:
           type: object
+          additionalProperties: true
         timestamp:
           format: date-time
           type: string

@@ -1,5 +1,4 @@
 import { Type } from '@nestjs/common';
-import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { DECORATORS } from '../asyncapi.constants';
 import { AsyncApiOperationOptionsRaw } from '../interface';
 import { OperationObjectFactory } from '../services';
@@ -7,7 +6,7 @@ import { OperationObjectFactory } from '../services';
 const operationObjectFactory = new OperationObjectFactory();
 
 export const exploreAsyncApiOperationMetadata = (
-  schemas: Record<string, SchemaObject>,
+  models: Set<Function>,
   _instance: object,
   _prototype: Type<unknown>,
   method: object,
@@ -27,7 +26,7 @@ export const exploreAsyncApiOperationMetadata = (
 
     const methodTypeData = {
       ...option,
-      ...operationObjectFactory.create(option, ['application/json'], schemas),
+      ...operationObjectFactory.create(option, ['application/json'], models),
       channel: undefined,
       type: undefined,
     };
