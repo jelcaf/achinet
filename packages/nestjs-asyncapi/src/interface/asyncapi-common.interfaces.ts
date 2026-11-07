@@ -3,7 +3,7 @@ import {
   ReferenceObject,
   SchemaObject,
   ServerVariableObject,
-} from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+} from '@nestjs/swagger';
 import {
   AmqpChannelBinding,
   AmqpMessageBinding,

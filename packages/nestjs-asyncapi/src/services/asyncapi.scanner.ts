@@ -3,26 +3,19 @@ import { MODULE_PATH } from '@nestjs/common/constants';
 import { Injectable, InjectionToken } from '@nestjs/common/interfaces';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { Module } from '@nestjs/core/injector/module';
-import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-properties-accessor';
-import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory';
-import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
-import { stripLastSlash } from '@nestjs/swagger/dist/utils/strip-last-slash.util';
 import { flatten, isEmpty } from 'lodash';
 import { AsyncApiDocument, AsyncApiDocumentOptions, DenormalizedDoc } from '../interface';
+import { stripLastSlash } from '../utils';
 import { AsyncApiExplorer } from './asyncapi.explorer';
 import { AsyncapiTransformer } from './asyncapi.transformer';
+import { SwaggerSchemaFactory } from './swagger-schema.factory';
 
 export class AsyncapiScanner {
   private readonly transformer = new AsyncapiTransformer();
 
   private readonly explorer = new AsyncApiExplorer();
 
-  private readonly modelPropertiesAccessor = new ModelPropertiesAccessor();
-
-  private readonly swaggerTypesMapper = new SwaggerTypesMapper();
-
-  private readonly schemaObjectFactory = new SchemaObjectFactory(this.modelPropertiesAccessor, this.swaggerTypesMapper);
+  private readonly schemaFactory = new SwaggerSchemaFactory();
 
   public scanApplication(
     app: INestApplicationContext,
@@ -62,8 +55,8 @@ export class AsyncapiScanner {
       return [...channels, ...this.scanModuleProviders(allProviders, path, globalPrefix, operationIdFactory)];
     }, []);
 
-    const schemas = this.explorer.getSchemas();
-    this.addExtraModels(schemas, extraModels);
+    // Second pass: build schemas for every payload class found plus user-provided extra models
+    const schemas = this.schemaFactory.generate(app, [...this.explorer.getModels(), ...extraModels], options);
     const normalizedChannels = this.transformer.normalizeChannels(flatten(denormalizedChannels));
     return {
       ...normalizedChannels,
@@ -95,11 +88,5 @@ export class AsyncapiScanner {
   private getGlobalPrefix(app: INestApplicationContext): string {
     const internalConfigRef = (app as any).config;
     return internalConfigRef?.getGlobalPrefix() || '';
-  }
-
-  private addExtraModels(schemas: Record<string, SchemaObject>, extraModels: Function[]) {
-    extraModels.forEach((item) => {
-      this.schemaObjectFactory.exploreModelSchema(item, schemas);
-    });
   }
 }

@@ -2,7 +2,7 @@ import {
   ExternalDocumentationObject,
   SecuritySchemeObject,
   TagObject,
-} from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+} from '@nestjs/swagger';
 import { isUndefined, negate, pickBy } from 'lodash';
 import { AsyncApiDocument, AsyncSecuritySchemeObject, AsyncServerObject } from './interface';
 
