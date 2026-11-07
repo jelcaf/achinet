@@ -4,6 +4,11 @@
   "description": "",
   "author": "",
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jelcaf/achinet.git",
+    "directory": "packages/nestjs-asyncapi"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,7 +19,8 @@
     "test": "jest --passWithNoTests",
     "test:e2e": "jest --runInBand --config test/configs/jest-e2e.config.js",
     "start:sample": "nest start",
-    "start:sample:watch": "nest start --watch"
+    "start:sample:watch": "nest start --watch",
+    "prepublishOnly": "yarn build"
   },
   "jest": {
     "moduleFileExtensions": [
