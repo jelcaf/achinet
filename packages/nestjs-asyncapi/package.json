@@ -44,9 +44,6 @@
         }
       ]
     },
-    "moduleNameMapper": {
-      "^@asyncapi/generator$": "<rootDir>/test/__mocks__/@asyncapi/generator.js"
-    },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
@@ -95,8 +92,7 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "@asyncapi/generator": "^3.5.0",
-    "@asyncapi/html-template": "^3.5.6",
+    "@asyncapi/react-component": "^3.2.3",
     "@swc/core": "1.16.22",
     "js-yaml": "4.3.2",
     "lodash": "^4.18.1"
